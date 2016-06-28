@@ -22,7 +22,7 @@ void signal()
 {
   if(listening)
   {
-    if(digitalRead(2))
+    if(digitalRead(5))
     {
       if(millis() - lowtime >= rate+buffertime)
       {
@@ -62,7 +62,7 @@ void signal()
   }
 }
 
-void frisk(int pin_out,String data)  
+void flicker(int pin_out,String data)  
 {
   pinMode(pin_out,OUTPUT);
   delay(rate);
@@ -98,19 +98,22 @@ void frisk(int pin_out,String data)
   digitalWrite(pin_out,LOW);
 }
 
-void chara()
+void listen()
 {
   listening = true;
-  attachInterrupt(0,signal,CHANGE);
+  attachInterrupt(5,signal,CHANGE);
 }
+
 void setup() 
 {
+  //==== คำสั่งรับ
   Serial.begin(9600);
-  chara();
+  listen(); 
 }
 
 void loop() 
 {
-  delay(7000);
-  //frisk(8,"1011110010010100101000110000101100100111011110100111100110000010001001001011001");
+  //==== คำสั่งส่ง
+  //delay(10000);
+  //flicker(8,"1110100010101110011000010111000110010110001010010010110001011110010101010100101010110001100100010011111100101000110000011110111111000101101011010011011011001001000010110010100101000110010010101001010010101000011101101101011111101000010111001101000011011001010110100101100011100101001010010011110100001001110100001110011000100100100011110101000101011101010110001100100101010001011101011011000010111110");
 }
